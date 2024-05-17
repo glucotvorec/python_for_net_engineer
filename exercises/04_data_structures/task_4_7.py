@@ -16,3 +16,5 @@
 """
 
 mac = "AAAA:BBBB:CCCC"
+hex_mac = int("0x" + mac.replace(":", "").lower(), base=16)
+print("{0:b}".format(hex_mac))

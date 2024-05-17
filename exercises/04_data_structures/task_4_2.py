@@ -14,4 +14,5 @@
 проверять результат.
 """
 
-mac = "AAAA:BBBB:CCCC"
+mac = "AAAA:BBBB:CCCC".replace(":", ".")
+print(mac)
