@@ -44,3 +44,6 @@ london_co = {
         "routing": True,
     },
 }
+device_name = input("Please enter device name(r1,r2 or sw1):")
+device_attr = input("Please enter device attribute(location,vendor,model,ios,ip,vlans or routing)")
+print(london_co[device_name][device_attr])

@@ -50,3 +50,9 @@ london_co = {
         "routing": True,
     },
 }
+device_name = input("Please enter device name(r1,r2 or sw1):")
+device_attr_list = str(london_co[device_name].keys()).replace("'", "")
+device_test_string = device_attr_list.strip("dict_keys([])")
+print("Please enter device attribute ({})".format(device_test_string))
+device_attr = input(":")
+print(london_co[device_name][device_attr])
