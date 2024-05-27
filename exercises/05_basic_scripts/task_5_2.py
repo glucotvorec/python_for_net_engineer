@@ -30,3 +30,24 @@ Out[1]: '11111111111111111111111111110000'
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
+ipv4_network = input("Please enter ipv4 network:").split("/")
+network = ipv4_network[0].split(".")
+prefix = "1" * int(ipv4_network[1]) + "0" * (32 - int(ipv4_network[1]))
+prefix_bin = [int(prefix[:8], 2), int(prefix[8:16], 2), int(prefix[16:24], 2), int(prefix[24:32], 2)]
+print("""
+        Network:
+        {0:<10}{1:<10}{2:<10}{3:<10}
+        {0:08b}  {1:08b}  {2:08b}  {3:08b}
+        
+        Mask:
+        /{4}
+        {5:<10}{6:<10}{7:<10}{8:<10}
+        {5:08b}  {6:08b}  {7:08b}  {8:08b}""".format(int(network[0]), 
+                                            int(network[1]), 
+                                            int(network[2]), 
+                                            int(network[3]), 
+                                            ipv4_network[1],
+                                            int(prefix_bin[0]), 
+                                            int(prefix_bin[1]), 
+                                            int(prefix_bin[2]), 
+                                            int(prefix_bin[3])))
