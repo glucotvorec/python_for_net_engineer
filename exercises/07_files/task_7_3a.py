@@ -30,7 +30,7 @@
  [500, '02b1.3c80.7b00', 'Gi0/5'],
  [200, '1a4b.c580.7000', 'Gi0/6'],
  [300, '0a1b.5c80.70f0', 'Gi0/7'],
- [10, '01ab.c5d0.70d0', 'Gi0/8'],
+ [10, '01ab.c5d0.70d0', 'Gi0/8'],l
  [1000, '0a4b.c380.7d00', 'Gi0/9']]
 
 Сортировка должна быть по первому элементу (vlan), а если первый элемент одинаковый,
@@ -40,3 +40,22 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+cam_dic = {}
+cam_list = []
+with open("/home/swordsman/Yandex.Disk/repo/python_for_net_engineer/exercises/07_files/CAM_table.txt") as file_cam:
+    for line in file_cam:
+        line_list = line.strip(" ").split()
+        for cam in line_list:
+            if  cam[0].isdigit() and not "." in cam:
+                cam_dic['vlan'] = int(cam)
+            elif "." in cam:
+                cam_dic['mac'] = cam
+            elif 'Gi' in cam:
+                cam_dic['interface'] = cam
+            else:
+                continue
+        if cam_dic:
+            cam_list.append([cam_dic["vlan"], cam_dic["mac"], cam_dic["interface"]])
+cam_list = sorted(cam_list)
+for cam_srt in cam_list:
+    print(f"{cam_srt[0]:<8} {cam_srt[1]} {cam_srt[2]:>10}")

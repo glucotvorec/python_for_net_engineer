@@ -16,4 +16,17 @@
 
 """
 
+from sys import argv
+
 ignore = ["duplex", "alias", "configuration"]
+with open(argv[1]) as config_in, open(argv[2], "a") as config_out:
+    for line in config_in:
+        if line == None or line[0] == "!":
+            continue
+        else:
+            for word in ignore:
+                if word in line:
+                    break
+            else:
+                line = line
+                config_out.write(f"{line}")

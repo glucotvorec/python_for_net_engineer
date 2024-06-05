@@ -39,3 +39,10 @@ interface Ethernet0/3
 ...
 
 """
+with open("/home/swordsman/Yandex.Disk/repo/python_for_net_engineer/exercises/07_files/config_sw1.txt") as config:
+    for line in config:
+        if line == None or line[0] == "!":
+            continue
+        else:
+            line = line.strip("\n")
+            print(f"{line}")

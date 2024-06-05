@@ -20,3 +20,18 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+cam_dic = {}
+with open("/home/swordsman/Yandex.Disk/repo/python_for_net_engineer/exercises/07_files/CAM_table.txt") as file_cam:
+    for line in file_cam:
+        line_list = line.strip(" ").split()
+        for cam in line_list:
+            if  cam[0].isdigit() and not "." in cam:
+                cam_dic['vlan'] = cam
+            elif "." in cam:
+                cam_dic['mac'] = cam
+            elif 'Gi' in cam:
+                cam_dic['interface'] = cam
+            else:
+                continue
+        if cam_dic:
+            print(f'{cam_dic["vlan"]:8} {cam_dic["mac"]} {cam_dic["interface"]:>10}')

@@ -17,3 +17,14 @@
 """
 
 ignore = ["duplex", "alias", "configuration"]
+with open("/home/swordsman/Yandex.Disk/repo/python_for_net_engineer/exercises/07_files/config_sw1.txt") as config:
+    for line in config:
+        if line == None or line[0] == "!":
+            continue
+        else:
+            for word in ignore:
+                if word in line:
+                    break
+            else:
+                line = line.strip("\n")
+                print(f"{line}")
