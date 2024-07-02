@@ -23,3 +23,36 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
+def get_int_vlan_map(config_filename):
+    """ 
+    Функция проходит по файлу конфигурации коммутатора и возвращает 
+    кортеж из двух словарей содержащих название интерфейсов и номера vlan 
+    к которым относятся интерфейсы"""
+    # Словари для хранения транковых и интерфейсов доступа
+    trunk_interfaces = {}
+    access_interfaces = {}
+ 
+    with open(config_filename) as cisco_config_file:
+        # Перебираем строки конфигурации
+        for line in cisco_config_file:
+            # Удаляем комментарии и пустые строки
+            if not line.strip().startswith('!') and line and len(line.split()) >= 2:
+                # Разделяем строку на слова
+                line = line.strip()
+                words = line.split()     
+                if words[0] == "interface" and "Ethernet" in words[1]:
+                    interface_name = words[1]
+                # Проверяем, является ли интерфейс транковым
+                elif words[0] == 'switchport' and words[1] == 'trunk' and words[2] == "allowed":
+                    # Сохраняем информацию о транковом интерфейсе
+                    trunk_interfaces[interface_name] = [int(num) for num in words[4].split(',')]
+                # Проверяем, является ли интерфейс доступом
+                elif words[0] == 'switchport' and words[1] == 'access' and words[2] == 'vlan':
+                    # Сохраняем информацию об интерфейсе доступа
+                    access_interfaces[interface_name] = int(words[3])
+    final_tuple=(access_interfaces, trunk_interfaces)
+    return final_tuple
+# Выводим результаты
+config_name = "/home/swordsman/Yandex.Disk/repo/python_for_net_engineer/exercises/09_functions/config_sw1.txt"
+int_vlan_map = get_int_vlan_map(config_name)
+print(f"{int_vlan_map}")
