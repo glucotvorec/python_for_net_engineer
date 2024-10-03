@@ -60,6 +60,6 @@ def get_int_vlan_map(config_filename):
     final_tuple=(access_interfaces, trunk_interfaces)
     return final_tuple
 # Выводим результаты
-config_name = "/home/swordsman/Yandex.Disk/repo/python_for_net_engineer/exercises/09_functions/config_sw2.txt"
+config_name = "/home/glucotvorec/Yandex.Disk/repo/python_for_net_engineer/exercises/09_functions/config_sw2.txt"
 int_vlan_map = get_int_vlan_map(config_name)
 print(f"{int_vlan_map}")

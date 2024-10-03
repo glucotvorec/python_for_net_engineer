@@ -64,29 +64,18 @@ def ignore_command(command, ignore):
         if word in command:
             ignore_status = True
     return ignore_status
-    
+
 
 def convert_config_to_dict(config_filename):
-    """
-    Функция преобразует файл конфигурации с оборудования cisco в словарь
-    все команды верхнего уровня принимаются как ключи словоря, вложенные команды 
-    становятся элементами списка"""
-    config_dic = {}
-    up_command = None
-    with open(config_filename) as cisco_config_file:
-    # Перебираем строки конфигурации
-        for line in cisco_config_file:
-            if not line.startswith('!') and line.isalnum and not ignore_command(line, ignore):
-                if not line.startswith(" ") and not line == "\n":
-                    up_command = line.strip()
-                    config_dic[up_command] = []
-                elif not line == "\n":
-                    config_dic[up_command].append(line.strip())
+    config_dict = {}
+    with open(config_filename) as f:
+        for line in f:
+            line = line.rstrip()
+            if line and not (line.startswith("!") or ignore_command(line, ignore)):
+                if line[0].isalnum():
+                    section = line
+                    config_dict[section] = []
                 else:
-                    continue
-    return config_dic
-                   
-config_name = "/home/glucotvorec/Yandex.Disk/repo/python_for_net_engineer/exercises/09_functions/config_sw1.txt"
-configuration = convert_config_to_dict(config_name)
-for up, sub in configuration.items():
-    print(fr"{up}:{sub}")    
+                    config_dict[section].append(line.strip())
+    return config_dict
+
