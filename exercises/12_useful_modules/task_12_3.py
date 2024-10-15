@@ -18,3 +18,13 @@ Reachable    Unreachable
              10.1.1.9
 
 """
+from tabulate import tabulate
+def print_ip_table(reachable,unreachable):
+    ip_dict = {}
+    ip_dict = {"Reachable": reachable, "Unreachable": unreachable}
+    print(tabulate(ip_dict, headers="keys"))
+
+if __name__ == "__main__":
+    alive = ["10.10.10.1", "10.10.10.2", "10.10.45.1"]
+    dead = ["1.1.1.1", "8.8.8.8", "127.0.0.1"]
+    print_ip_table(alive,dead)

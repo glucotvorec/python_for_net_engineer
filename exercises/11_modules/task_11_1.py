@@ -43,7 +43,27 @@ def parse_cdp_neighbors(command_output):
     и с файлами и с выводом с оборудования.
     Плюс учимся работать с таким выводом.
     """
+    config_list = command_output.split()
+    #Get hostname from output
+    host_name = (config_list[0].partition(">"))[0]
+    #Get index all words "Eth"
+    eth_index= [position for position, string in enumerate(config_list) if string == "Eth"]
+    #Split list eth_index on local and remote interface
+    local_eth_index = []
+    remote_eth_index = []
+    for postion, index in enumerate(eth_index):
+        if postion % 2 == 0:
+            local_eth_index.append(index)
+        else:
+            remote_eth_index.append(index)
+    #Create a target dictionary and fill it based on index list local_eth_index and remote_eth_index
+    neigh_dic = {}
+    for local, remote in zip(local_eth_index, remote_eth_index):
+        local_eth = (host_name, config_list[local] + config_list[local + 1])
+        remote_eth = (config_list[local - 1], config_list[remote] + config_list[remote +1])
+        neigh_dic[local_eth] = remote_eth
 
+    return neigh_dic
 
 if __name__ == "__main__":
     with open("sh_cdp_n_sw1.txt") as f:

@@ -73,6 +73,9 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+import task_11_1
+import task_11_2
+import draw_network_graph
 
 infiles = [
     "sh_cdp_n_sw1.txt",
@@ -80,3 +83,27 @@ infiles = [
     "sh_cdp_n_r2.txt",
     "sh_cdp_n_r3.txt",
 ]
+def unique_network_map(topology_dict):
+    """
+    Фунция принимает словарь с топологией канального уровня и возвращает словарь только с уникальными 
+    соединениями.
+    """
+    uniq_topology_dict = {}
+    for key, value in topology_dict.items():
+        for key2, value2 in topology_dict.items():
+            if key == value2 and value == key2:
+                topology_dict[key2] = "DUBLE"
+    for key, value in topology_dict.items():
+        if value == "DUBLE":
+            continue
+        else:
+            uniq_topology_dict[key] = value
+            
+    return uniq_topology_dict
+
+if __name__ == "__main__":
+
+    net_map = task_11_2.create_network_map(infiles)
+    u_net_map = unique_network_map(net_map)
+
+    draw_network_graph.draw_topology(u_net_map)
